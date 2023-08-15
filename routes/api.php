@@ -66,6 +66,9 @@ Route::group(['prefix' => 'coin'], function () {
     Route::get('all-sub-categories', [CoinController::class, 'get_all_subs']);
     Route::post('update/{id}', [CoinController::class, 'update']);
     Route::delete('delete/{id}', [CoinController::class, 'destroy']);
+    Route::post('search', [CoinController::class, 'searchByName']);
+    Route::post('searchByQuery', [ CoinController::class, 'querySearch']);
+
 });
 
 // Category controller

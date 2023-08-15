@@ -11,8 +11,10 @@ class Coin extends Model
     protected $fillable = ['Title', 'Qty' , 'Prices'];
     protected $guarded = ["id"];
 
+    protected $table = 'coins';
+
     // after ind id on coin table
-    // we used Category becuase we need data from that table
+    // we used Category because we need data from that table
     // find "type" column in Category with "spell_type" in Coin table
     public function getall(){
         return $this->hasMany(Category::class,'type','spell_type');

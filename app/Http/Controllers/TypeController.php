@@ -98,7 +98,8 @@ class TypeController extends Controller
         ]);
 
         $data = Type::findOrFail($id);
-        $data->Title = $request->input('Title');
+        //$data->Title = $request->input('Title');
+        $data->Title = $request->Title;
 
         if ($request->hasFile('Image')) {
             $image = $request->file('Image');
@@ -112,7 +113,7 @@ class TypeController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $data,
-        ]);
+        ],200);
     }
 
 

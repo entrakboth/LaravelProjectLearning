@@ -135,7 +135,7 @@ class CoinController extends Controller
                 'status' => 'success',
                 'message' => 'Todo updated successfully',
                 'todo' => $coins,
-            ],200);
+            ], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'status' => 'error',
@@ -156,6 +156,52 @@ class CoinController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'delete, success',
-        ]);
+        ], 200);
     }
+
+    // search by type name
+    public function searchByName(Request $request)
+    {
+        $name = $request->Title;
+
+        // none using query builder in Laravel
+        $result = Coin::where('Title', 'LIKE', '%' . $name . '%')->get();
+
+        if ($result->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No results found.'
+            ], 404);
+        } else {
+            return response()->json([
+                'status' => 'success',
+                'data' => $result
+            ], 200);
+        }
+    }
+
+    public function querySearch(Request $request)
+    {
+        $name = $request->Title;
+
+        // Using query builder in Laravel
+        $result = DB::table('coins')
+            ->where('Title', 'LIKE', '%' . $name . '%')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        if ($result->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No results found.'
+            ], 404);
+        } else {
+            return response()->json([
+                'status' => 'success',
+                'data' => $result
+            ], 200);
+        }
+    }
+
+
 }
