@@ -7,6 +7,7 @@ use App\Models\Power;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 
 class CoinController extends Controller
@@ -165,41 +166,50 @@ class CoinController extends Controller
         $name = $request->Title;
 
         // none using query builder in Laravel
+        // normal search
         $result = Coin::where('Title', 'LIKE', '%' . $name . '%')->get();
+
+        // search and sort by Qty
+        // $result = Coin::where('Title' , 'LIKE' , '%' . $name . '%')->orderBy('Qty', 'desc')->get();
 
         if ($result->isEmpty()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'No results found.'
-            ], 404);
+            ]);
         } else {
             return response()->json([
                 'status' => 'success',
                 'data' => $result
-            ], 200);
+            ]);
         }
     }
+
+//$result = DB::table('coins')
+//->select('*')
+//->where('Title', 'LIKE', '%' . $name . '%')
+//->orderBy('id', 'desc')
+//->get();
 
     public function querySearch(Request $request)
     {
         $name = $request->Title;
 
-        // Using query builder in Laravel
         $result = DB::table('coins')
-            ->where('Title', 'LIKE', '%' . $name . '%')
-            ->orderBy('id', 'desc')
-            ->get();
+                    ->select('*')
+                    ->where('Title','LIKE','%'. $name.'%')
+                    ->orderBy('Qty', 'desc')->get();
 
         if ($result->isEmpty()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'No results found.'
-            ], 404);
+            ]);
         } else {
             return response()->json([
                 'status' => 'success',
                 'data' => $result
-            ], 200);
+            ]);
         }
     }
 
