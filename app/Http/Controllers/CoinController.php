@@ -197,7 +197,7 @@ class CoinController extends Controller
 
         $result = DB::table('coins')
                     ->select('*')
-                    ->where('Title','LIKE','%'. $name.'%')
+                    ->where('Title','LIKE','%'.$name.'%')
                     ->orderBy('Qty', 'desc')->get();
 
         if ($result->isEmpty()) {
