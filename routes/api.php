@@ -1,15 +1,15 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserAccController;
-use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-
+use \App\Http\Controllers\GodController;
+use \App\Http\Controllers\RankController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,18 +43,6 @@ Route::controller(TodoController::class)->group(function () {
     Route::delete('todo/delete/{id}', 'destroy');
 });
 
-// Coin table
-//Route::controller(CoinController::class)->group(function () {
-//    Route::get('coin/index', 'index');
-//    Route::post('coin/store', 'store');
-//    Route::get('coin/show/{id}', 'show');
-//    Route::put('coin/edit/{id}', 'edit');
-//    Route::get('coin/sub-category/{id}', 'sub_category');
-//    Route::get('coin/all-sub-categories', 'get_all_subs');
-//    Route::post('coin/update/{id}', 'update');
-//    Route::delete('coin/delete/{id}', 'destroy');
-//
-//});
 
 // update coin controller
 Route::group(['prefix' => 'coin'], function () {
@@ -92,5 +80,20 @@ Route::controller(TypeController::class)->group(function () {
     Route::put('type/edit/{id}', 'edit');
     Route::post('type/update/{id}', 'update');
     Route::delete('type/delete/{id}', 'destroy');
+});
+
+// one-to-one table
+Route::controller(GodController::class)->group(function () {
+    Route::get('God/index', 'index');
+    Route::get('God/GetSub', 'Get_All');
+    Route::post('God/store', 'store');
+    Route::post('God/find/{id}', 'getSubWithId');
+
+});
+
+// get all one-to-one
+Route::controller(RankController::class)->group(function () {
+    Route::get('rank/index', 'index');
+    Route::get('rank/getAll', 'getAll');
 });
 

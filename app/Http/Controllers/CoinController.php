@@ -24,7 +24,7 @@ class CoinController extends Controller
      */
     public function index()
     {
-        $coins = Coin::simplePaginate(5);
+        $coins = Coin::with('getRank')->simplePaginate(5);
         return response()->json([
             'status' => 'success',
             'data' => $coins,
@@ -164,13 +164,9 @@ class CoinController extends Controller
     public function searchByName(Request $request)
     {
         $name = $request->Title;
-
         // none using query builder in Laravel
         // normal search
         $result = Coin::where('Title', 'LIKE', '%' . $name . '%')->get();
-
-        // search and sort by Qty
-        // $result = Coin::where('Title' , 'LIKE' , '%' . $name . '%')->orderBy('Qty', 'desc')->get();
 
         if ($result->isEmpty()) {
             return response()->json([
@@ -184,12 +180,6 @@ class CoinController extends Controller
             ]);
         }
     }
-
-//$result = DB::table('coins')
-//->select('*')
-//->where('Title', 'LIKE', '%' . $name . '%')
-//->orderBy('id', 'desc')
-//->get();
 
     public function querySearch(Request $request)
     {
