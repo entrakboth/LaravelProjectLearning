@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\God;
-use App\Models\rank;
-use App\Http\Requests\StorerankRequest;
-use App\Http\Requests\UpdaterankRequest;
+use App\Models\cities;
+use App\Http\Requests\StorecitiesRequest;
+use App\Http\Requests\UpdatecitiesRequest;
+use App\Models\kingdom;
 use Illuminate\Http\Request;
 
-//one to one with god table
-class RankController extends Controller
+class CitiesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = rank::simplePaginate(5);
+        $data = cities::simplePaginate(5);
+
         return response()->json([
             'status' => 'success',
             'data' => $data,
         ]);
     }
 
-    // get parent God table
-    public function getAll(){
-        $data = rank::with('getGods')->get();
+    public function getKingdoms(){
+        $data = cities::with('getKingdoms')->simplePaginate(5);
+
         return response()->json([
             'status' => 'success',
             'data' => $data,
@@ -45,23 +45,22 @@ class RankController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $data = God::find($id);
+        $data = kingdom::find($id);
 
-        // if parent id is not found
         if(!$data){
             return response()->json([
-               'message' => 'Fail to create'
+                'message' => 'Fail to create'
             ]);
-        }else{ // if we found parent id
-            $rankData = new rank();
+        }else{
+            $cityData = new cities();
 
-            $rankData->power = $request->power;
-            $rankData->godId = $id;
+            $cityData->KingdomsId = $id;
+            $cityData->Name = $request->Name;
 
-            if ($rankData->save()) {
-                return response()->json(['message' => 'Rank created successfully']);
-            } else {
-                return response()->json(['message' => 'Failed to create rank']);
+            if($cityData->save()){
+                return response()->json([ 'status' => 'success to save',]);
+            }else{
+                return response()->json([ 'status' => 'Fail to save',]);
             }
         }
 
@@ -70,7 +69,7 @@ class RankController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(rank $rank)
+    public function show(cities $cities)
     {
         //
     }
@@ -78,7 +77,7 @@ class RankController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(rank $rank)
+    public function edit(cities $cities)
     {
         //
     }
@@ -86,7 +85,7 @@ class RankController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdaterankRequest $request, rank $rank)
+    public function update(UpdatecitiesRequest $request, cities $cities)
     {
         //
     }
@@ -94,7 +93,7 @@ class RankController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(rank $rank)
+    public function destroy(cities $cities)
     {
         //
     }

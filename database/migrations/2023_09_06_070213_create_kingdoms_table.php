@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ranks', function (Blueprint $table) {
+        Schema::create('kingdoms', function (Blueprint $table) {
             $table->id();
-            $table->string('Power');
-            $table->foreign('GodId')->references('id')->on('gods')->onDelete('cascade');
+            $table->string('Title')->nullable();
+            $table->string('Power')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ranks');
+        Schema::dropIfExists('kingdoms');
     }
 };

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreGodRequest;
 use App\Http\Requests\UpdateGodRequest;
 use Illuminate\Http\Request;
 
+// one to one with rank table
 class GodController extends Controller
 {
     /**
@@ -99,8 +100,23 @@ class GodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(God $god)
+    public function destroy($id)
     {
-        //
+        $data = God::findOrFail($id);
+
+        $rankData = $data->getRank;
+
+        if($data->delete()){
+            if($rankData){
+                $rankData->delete();
+            }
+            return response()->json([
+                'message' => 'delete successfuly'
+            ]);
+        }else{
+            return response()->json([
+                'message' => 'fail to delete'
+            ]);
+        }
     }
 }

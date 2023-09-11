@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\GodController;
 use \App\Http\Controllers\RankController;
+use \App\Http\Controllers\KingdomController;
+use \App\Http\Controllers\CitiesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -88,6 +90,7 @@ Route::controller(GodController::class)->group(function () {
     Route::get('God/GetSub', 'Get_All');
     Route::post('God/store', 'store');
     Route::post('God/find/{id}', 'getSubWithId');
+    Route::delete('God/delete/{id}', 'destroy');
 
 });
 
@@ -95,5 +98,23 @@ Route::controller(GodController::class)->group(function () {
 Route::controller(RankController::class)->group(function () {
     Route::get('rank/index', 'index');
     Route::get('rank/getAll', 'getAll');
+    Route::post('rank/store/{id}', 'store');
+});
+
+// get all one-to-many
+Route::controller(KingdomController::class)->group(function () {
+    Route::get('kingdoms/index', 'index');
+    Route::get('kingdoms/getAll', 'getCities');
+    Route::post('kingdoms/store', 'store');
+    Route::put('kingdoms/edit/{id}', 'edit');
+    Route::delete('kingdoms/destroy/{id}', 'destroy');
+
+});
+// get all one-to-many
+Route::controller(CitiesController::class)->group(function () {
+    Route::get('cities/index', 'index');
+    Route::get('cities/getAll', 'getKingdoms');
+    Route::post('cities/store/{id}', 'store');
+
 });
 

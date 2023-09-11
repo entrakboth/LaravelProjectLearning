@@ -11,6 +11,6 @@ class rank extends Model
     protected $table = "ranks";
 
     public function getGods(){
-        return $this->belongsTo(God::class,'id','id');
+        return $this->belongsTo(God::class,'godId','id');
     }
 }

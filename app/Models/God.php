@@ -11,6 +11,6 @@ class God extends Model
     protected $table = "gods";
 
     public function getRank(){
-        return $this->hasOne(rank::class, 'id','id');
+        return $this->hasOne(rank::class, 'godId','id');
     }
 }
