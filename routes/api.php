@@ -12,6 +12,8 @@ use \App\Http\Controllers\GodController;
 use \App\Http\Controllers\RankController;
 use \App\Http\Controllers\KingdomController;
 use \App\Http\Controllers\CitiesController;
+use \App\Http\Controllers\CountryController;
+use \App\Http\Controllers\StateController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -58,7 +60,6 @@ Route::group(['prefix' => 'coin'], function () {
     Route::delete('delete/{id}', [CoinController::class, 'destroy']);
     Route::post('search', [CoinController::class, 'searchByName']);
     Route::post('searchByQuery', [ CoinController::class, 'querySearch']);
-
 });
 
 // Category controller
@@ -118,3 +119,17 @@ Route::controller(CitiesController::class)->group(function () {
 
 });
 
+
+// country and state
+Route::controller(CountryController::class)->group(function (){
+    Route::get('getAllCountryS/index', 'index');
+    Route::get('Country/GetAllState', 'GetState');
+    Route::post('Country/GetAllCambodia', 'getCambodiaState');
+    Route::post('Country/GetAllStatebyID/{id}', 'getStateById');
+
+});
+
+// State controller
+Route::controller(StateController::class)->group(function (){
+   Route::get("getAllState", 'index');
+});

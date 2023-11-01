@@ -9,9 +9,11 @@ class kingdom extends Model
 {
     use HasFactory;
     protected $table = "kingdoms";
+    protected $guarded = ["id"];
 
     public function getCities(){
-        return $this->hasMany(cities::class, 'KingdomsId', 'id');
+        return $this->hasMany(cities::class, 'KingdomsId');
     }
+
 
 }

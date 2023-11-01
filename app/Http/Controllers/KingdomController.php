@@ -26,7 +26,8 @@ class KingdomController extends Controller
 
     // Get all kingdoms data with their relationship
     public function getCities(){
-        $data = kingdom::with('getCities')->simplePaginate(5);
+        // return all state without limited
+        $data = kingdom::with('getCities')->get();
 
         return response()->json([
             'status' => 'success',
@@ -55,7 +56,6 @@ class KingdomController extends Controller
             return response()->json([ 'status' => 'success to save',]);
         }else{
             return response()->json([ 'status' => 'Fail to save',]);
-
         }
 
     }
@@ -108,7 +108,6 @@ class KingdomController extends Controller
             return response()->json([ 'status' => 'success to delete',]);
         }else{
             return response()->json([ 'status' => 'Fail to delete',]);
-
         }
     }
 }
